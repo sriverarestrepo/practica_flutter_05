@@ -37,10 +37,13 @@ class _MapaPageState extends State<MapaPage> {
     return FlutterMap(
       options: MapOptions(
         center: scan.getLatLng(),
-        zoom: 10,
+        zoom: 15,
+        maxZoom: 20,
       ),
       layers: [
         _crearMapa(),
+        _crearMarcadores(scan),
+
       ],
     );
 
@@ -48,11 +51,33 @@ class _MapaPageState extends State<MapaPage> {
 
   _crearMapa() {
     return TileLayerOptions(
-      urlTemplate: 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
+      urlTemplate: 'https://api.mapbox.com/v4/'
+          '{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}',
       additionalOptions: {
-        'accessToken' :'pk.eyJ1Ijoic3JycGx1cyIsImEiOiJja2NlMjJnODYwMjNkMnprMmwwdmR3MXlxIn0.3CztlFdk3LsM-nN3sHe-vA',
-        'id'          : 'mapbox.streets'
-      }
+      'accessToken':'pk.eyJ1Ijoic3JycGx1cyIsImEiOiJja2NlMjJnODYwMjNkMnprMmwwdmR3MXlxIn0.3CztlFdk3LsM-nN3sHe-vA',
+      'id': 'mapbox.satellite'
+      // streets , dark, light, outdoors, satellite
+      },
+    );
+  }
+
+  _crearMarcadores(ScanModel scan) {
+    return MarkerLayerOptions(
+      markers: <Marker> [
+        Marker(
+          width: 100.0,
+          height: 100.0,
+          point: scan.getLatLng(),
+          builder: (context) => Container(
+              child: Icon(
+                Icons.location_on, 
+                size: 70.0,
+                color: Theme.of(context).primaryColor,
+              )
+            )
+        ),
+
+      ]
 
     );
   }
