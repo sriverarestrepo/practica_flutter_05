@@ -41,7 +41,7 @@ class MapasPage extends StatelessWidget {
                scansBloc.borrarScan(scanList[i].id);
             },
             child: ListTile(
-              leading: Icon(Icons.cloud_done,
+              leading: Icon(Icons.map,
                 color: Theme.of(context).primaryColor,
                 ),
               title: Text(scanList[i].valor),
